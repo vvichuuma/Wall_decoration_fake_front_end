@@ -46,7 +46,6 @@ export default class test extends Component {
             onChangeText={this.handleChangeText}
             placeholder="Enter Email"
           />
-          <Text style={{ fontSize: 30 }}>{this.state.text}</Text>
         </View>
 
         <View style={styles.Password}>
@@ -64,7 +63,6 @@ export default class test extends Component {
             onChangeText={this.changeit}
             secureTextEntry={true}
           />
-          <Text>{this.state.email}</Text>
         </View>
 
         <View
