@@ -7,8 +7,12 @@ import {
   Button,
   TextInput,
   StyleSheet,
+  FlatList,
   TouchableOpacity
 } from "react-native";
+
+var axios = require("axios");
+console.log(axios);
 
 export default class signup extends Component {
   static navigationOptions = {
@@ -17,8 +21,33 @@ export default class signup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { first: "" };
-    this.state = { last: "" };
+
+    this.state = {
+      first: "",
+      last: "",
+      email: "",
+      password: "",
+      password_c: "",
+      errors: []
+    };
+  }
+
+  testdata() {
+    return "Computer Code is powerful!!";
+  }
+
+  iterateErrors() {
+    if (this.state.errors) {
+      let err = this.state.errors;
+      return err.map((data, i) => {
+        return (
+          <View key={i}>
+            <Text style={styles.err}>{data}</Text>
+            {"\b"}
+          </View>
+        );
+      });
+    }
   }
 
   render() {
@@ -33,13 +62,14 @@ export default class signup extends Component {
               onPress={() => this.props.navigation.navigate("App")}
             />
           </View>
+
           <View style={styles.soothu}>
             <View style={styles.one}>
               <Text style={styles.name}>FirstName:</Text>
               <TextInput
                 style={styles.input}
                 placeholder="enter first name"
-                onChangeText={this.firstname}
+                onChangeText={val => this.setState({ first: val })}
               />
             </View>
 
@@ -48,7 +78,7 @@ export default class signup extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="enter last name"
-                onChangeText={this.lastname}
+                onChangeText={val => this.setState({ last: val })}
               />
             </View>
 
@@ -57,7 +87,7 @@ export default class signup extends Component {
               <TextInput
                 style={styles.input}
                 placeholder="enter email"
-                onChangeText={this.email}
+                onChangeText={val => this.setState({ email: val })}
               />
             </View>
 
@@ -67,7 +97,7 @@ export default class signup extends Component {
                 style={styles.input}
                 placeholder="enter password"
                 secureTextEntry={true}
-                onChangeText={this.password}
+                onChangeText={val => this.setState({ password: val })}
               />
             </View>
 
@@ -77,17 +107,19 @@ export default class signup extends Component {
                 style={styles.input}
                 placeholder="enter password"
                 secureTextEntry={true}
-                onChangeText={this.password_c}
+                onChangeText={val => this.setState({ password_c: val })}
               />
             </View>
           </View>
+          <View style={styles.errors}>
+            <Text>{this.iterateErrors()}</Text>
+          </View>
+
           <TouchableOpacity style={styles.submit}>
             <Button
               title="Submit"
               color="white"
-              onPress={() => {
-                console.log("Computer Code is awesome");
-              }}
+              onPress={this.onRegisterPressed.bind(this)}
             />
           </TouchableOpacity>
         </View>
@@ -95,13 +127,37 @@ export default class signup extends Component {
     );
   }
 
-  firstname = type => {
-    this.setState = { first: type };
-  };
+  onRegisterPressed() {
+    console.log("Computer Code is powerful");
+    var params = {
+      first_name: this.state.first,
+      last_name: this.state.last,
+      email: this.state.email,
+      password: this.state.password,
+      password_confirmation: this.state.password_c
+    };
 
-  lastname = lasty => {
-    this.setState = { last: lasty };
-  };
+    console.log(params);
+
+    // axios
+    //   .post("http://localhost:3000/api/users", params)
+    //   .then(function(response) {
+    //     console.log(response.data);
+    //   });
+
+    axios
+      .post("http://localhost:3000/api/users", params)
+      .then(response => {
+        this.props.navigation.navigate("login");
+      })
+      .catch(error => {
+        let error_arr = error.response.data.errors;
+
+        this.setState({ errors: error_arr });
+
+        console.log(this.state.errors);
+      });
+  }
 }
 
 const styles = StyleSheet.create({
@@ -137,7 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   soothu: {
-    marginTop: 40
+    marginTop: 20
   },
   func: {
     fontSize: 35,
@@ -158,8 +214,8 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "blue",
     position: "absolute",
-    left: 150,
-    top: 540,
+    left: 130,
+    top: 570,
     borderRadius: 20
   },
   wid: {
@@ -182,6 +238,19 @@ const styles = StyleSheet.create({
     left: 3,
     height: 50,
     width: 40
+  },
+  errors: {
+    position: "relative",
+    top: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 30,
+    marginRight: 30,
+
+    flexDirection: "row"
+  },
+  err: {
+    color: "red"
   }
 });
 

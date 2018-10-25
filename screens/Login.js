@@ -9,6 +9,9 @@ import {
   Button
 } from "react-native";
 
+var axios = require("axios");
+console.log(axios);
+
 export default class test extends Component {
   static navigationOptions = {
     header: null
@@ -16,8 +19,26 @@ export default class test extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { text: "" };
-    this.state = { email: "" };
+
+    this.state = {
+      email: "",
+      password: "",
+      errors: []
+    };
+  }
+
+  iterateErrors() {
+    if (this.state.errors) {
+      let err = this.state.errors;
+      return err.map((data, i) => {
+        return (
+          <View key={i}>
+            <Text style={styles.err}>{data}</Text>
+            {"\b"}
+          </View>
+        );
+      });
+    }
   }
 
   render() {
@@ -75,23 +96,49 @@ export default class test extends Component {
             bottom: 30
           }}
         >
-          <Button title="Submit" color="white" onPress={this.pressButt} />
+          <Button title="Submit" color="white" onPress={this.sessions} />
+        </View>
+
+        <View style={styles.errors}>
+          <Text>{this.iterateErrors()}</Text>
         </View>
       </View>
     );
   }
 
   handleChangeText = typedText => {
-    this.setState({ text: typedText });
-    const ball = typedText;
+    this.setState({ email: typedText });
   };
 
   changeit = type => {
-    this.setState({ email: type });
+    this.setState({ password: type });
   };
 
-  pressButt = () => {
-    console.log("Code is aweomse!!");
+  sessions = () => {
+     
+     var params = {
+       
+       email: this.state.email,
+       password: this.state.password
+
+     };
+
+   axios
+      .post("http://localhost:3000/api/sessions", params)
+      .then(response => {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + response.data.jwt;
+        localStorage.setItem("jwt", response.data.jwt);
+        this.props.navigation.navigate("App");
+      })
+      .catch(error => {
+        var err = ["Invalid email or password."];
+        this.setState({ errors: err });
+        console.log(this.state.errors);
+        this.email = "";
+        this.password = "";
+      });    
+   
   };
 }
 
@@ -140,6 +187,19 @@ const styles = StyleSheet.create({
     left: 3,
     height: 50,
     width: 40
+  },
+  errors: {
+    position: "relative",
+    top: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 30,
+    marginRight: 30,
+
+    flexDirection: "row"
+  },
+  err: {
+    color: "red"
   }
 });
 
