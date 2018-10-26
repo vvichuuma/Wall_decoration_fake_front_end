@@ -7,6 +7,7 @@ import Component1 from "../screens/Component1";
 import login from "../screens/Login";
 import signup from "../screens/Signup";
 import testing from "../screens/Testing";
+import Camera from "../screens/Camera";
 
 export default class app extends Component {
   render() {
@@ -20,11 +21,12 @@ const AppStackNavigator = createStackNavigator(
     Comp: Component1,
     signup: signup,
     login: login,
-    test: testing
+    test: testing,
+    camera: Camera
   },
 
   {
-    initialRouteName: "login"
+    initialRouteName: "App"
   }
 );
 

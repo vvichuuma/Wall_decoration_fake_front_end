@@ -6,7 +6,8 @@ import {
   AppRegistry,
   TextInput,
   StyleSheet,
-  Button
+  Button,
+  AsyncStorage
 } from "react-native";
 
 var axios = require("axios");
@@ -123,12 +124,13 @@ export default class test extends Component {
 
      };
 
-   axios
+      axios
       .post("http://localhost:3000/api/sessions", params)
       .then(response => {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + response.data.jwt;
-        localStorage.setItem("jwt", response.data.jwt);
+        // localStorage.setItem("jwt", response.data.jwt);
+
         this.props.navigation.navigate("App");
       })
       .catch(error => {
@@ -137,8 +139,8 @@ export default class test extends Component {
         console.log(this.state.errors);
         this.email = "";
         this.password = "";
-      });    
-   
+      });
+
   };
 }
 

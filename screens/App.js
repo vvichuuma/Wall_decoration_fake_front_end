@@ -30,6 +30,12 @@ class myapp extends Component {
               title="SIGNUP"
               onPress={() => this.props.navigation.navigate("signup")}
             />
+              <Button
+              style={styles.signup}
+              title="CAMERA"
+              onPress={() => this.props.navigation.navigate("camera")}
+            />
+
           </View>
         </TouchableOpacity>
       </View>
