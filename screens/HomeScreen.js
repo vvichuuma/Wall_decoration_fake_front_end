@@ -8,6 +8,7 @@ import login from "../screens/Login";
 import signup from "../screens/Signup";
 import testing from "../screens/Testing";
 import Camera from "../screens/Camera";
+import welcome from "../screens/Welcome";
 
 export default class app extends Component {
   render() {
@@ -22,12 +23,11 @@ const AppStackNavigator = createStackNavigator(
     signup: signup,
     login: login,
     test: testing,
-    camera: Camera
+    camera: Camera,
+    welcome: welcome
   },
 
   {
-    initialRouteName: "App"
+    initialRouteName: "welcome"
   }
 );
-
-

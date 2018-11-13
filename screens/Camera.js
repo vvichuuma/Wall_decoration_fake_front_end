@@ -61,6 +61,10 @@ const wbIcons = {
 };
 
 export default class CameraScreen extends React.Component {
+  static navigationOptions = {
+    header: null
+  };
+
   state = {
     flash: "off",
     zoom: 0,
@@ -196,7 +200,7 @@ export default class CameraScreen extends React.Component {
     }
     this.setState({
       pictureSize: this.state.pictureSizes[newId],
-      pictureSizeId: newId
+      pictureSizeId: newId 
     });
   };
 
@@ -386,27 +390,27 @@ export default class CameraScreen extends React.Component {
         }}
         style={styles.camera}
         onCameraReady={this.collectPictureSizes}
-        type={this.state.type}
-        flashMode={this.state.flash}
-        autoFocus={this.state.autoFocus}
-        zoom={this.state.zoom}
-        whiteBalance={this.state.whiteBalance}
-        ratio={this.state.ratio}
-        pictureSize={this.state.pictureSize}
-        onMountError={this.handleMountError}
-        onFacesDetected={
-          this.state.faceDetecting ? this.onFacesDetected : undefined
-        }
-        onFaceDetectionError={this.onFaceDetectionError}
-        barCodeScannerSettings={{
-          barCodeTypes: [
-            BarCodeScanner.Constants.BarCodeType.qr,
-            BarCodeScanner.Constants.BarCodeType.pdf417
-          ]
-        }}
-        onBarCodeScanned={
-          this.state.barcodeScanning ? this.onBarCodeScanned : undefined
-        }
+        // type={this.state.type}
+        // flashMode={this.state.flash}
+        // autoFocus={this.state.autoFocus}
+        // zoom={this.state.zoom}
+        // whiteBalance={this.state.whiteBalance}
+        // ratio={this.state.ratio}
+        // pictureSize={this.state.pictureSize}
+        // onMountError={this.handleMountError}
+        // onFacesDetected={
+        //   this.state.faceDetecting ? this.onFacesDetected : undefined
+        // }
+        // onFaceDetectionError={this.onFaceDetectionError}
+        // barCodeScannerSettings={{
+        //   barCodeTypes: [
+        //     BarCodeScanner.Constants.BarCodeType.qr,
+        //     BarCodeScanner.Constants.BarCodeType.pdf417
+        //   ]
+        // }}
+        // onBarCodeScanned={
+        //   this.state.barcodeScanning ? this.onBarCodeScanned : undefined
+        // }
       >
         {this.renderTopBar()}
         {this.renderBottomBar()}

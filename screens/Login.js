@@ -18,6 +18,8 @@ export default class test extends Component {
     header: null
   };
 
+//State Functions Begin:
+
   constructor(props) {
     super(props);
 
@@ -27,6 +29,8 @@ export default class test extends Component {
       errors: []
     };
   }
+
+  //State Function End
 
   iterateErrors() {
     if (this.state.errors) {
@@ -125,13 +129,13 @@ export default class test extends Component {
      };
 
       axios
-      .post("http://localhost:3000/api/sessions", params)
-      .then(response => {
+      .post("http://192.168.43.19:3000/api/sessions", params)
+      .then(async (response) => {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + response.data.jwt;
         // localStorage.setItem("jwt", response.data.jwt);
-
-        this.props.navigation.navigate("App");
+        await AsyncStorage.setItem("jwt", response.data.jwt);
+        this.props.navigation.navigate("welcome");
       })
       .catch(error => {
         var err = ["Invalid email or password."];
