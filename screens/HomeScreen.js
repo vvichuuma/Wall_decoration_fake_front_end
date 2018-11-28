@@ -9,6 +9,8 @@ import signup from "../screens/Signup";
 import testing from "../screens/Testing";
 import Camera from "../screens/Camera";
 import welcome from "../screens/Welcome";
+import pulling from '../screens/pulling';
+import draggable from '../screens/draggable';
 
 export default class app extends Component {
   render() {
@@ -24,10 +26,13 @@ const AppStackNavigator = createStackNavigator(
     login: login,
     test: testing,
     camera: Camera,
-    welcome: welcome
+    welcome: welcome,
+    pull: pulling,
+    draggable: draggable
+
   },
 
   {
-    initialRouteName: "welcome"
+    initialRouteName: "draggable"
   }
 );

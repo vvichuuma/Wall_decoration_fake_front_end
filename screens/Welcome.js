@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, AppRegistry, StyleSheet, TouchableOpacity,AsyncStorage, Button } from 'react-native';
 import { Ionicons,FontAwesome } from '@expo/vector-icons';
 
+import { ImagePicker } from 'expo';
+
+
+
  var axios = require('axios')
  console.log('axios')
 
@@ -58,8 +62,8 @@ import { Ionicons,FontAwesome } from '@expo/vector-icons';
      return(
         <View>
            <Text style={styles.welcome}>
-             Welcome <Text>{this.user()}</Text>
              <Text>{this.state.name} !!</Text>
+             Welcome <Text>{this.user()}</Text>
              <Text>{this.state.img}</Text>
 
              <Text>{this.images()}</Text>
@@ -76,7 +80,9 @@ import { Ionicons,FontAwesome } from '@expo/vector-icons';
               onPress={() => this.props.navigation.navigate("camera")}
             />
 
-
+            <View>
+            <input type='file' />
+            </View>
 
         </View>
 
