@@ -10,6 +10,7 @@ import {
 import { FileSystem, FaceDetector, MediaLibrary, Permissions } from "expo";
 import { MaterialIcons } from "@expo/vector-icons";
 import Photo from "./Photo";
+var axios = require("axios");
 
 const PHOTOS_DIR = FileSystem.documentDirectory + "photos";
 
@@ -18,7 +19,8 @@ export default class GalleryScreen extends React.Component {
     faces: {},
     images: {},
     photos: [],
-    selected: []
+    selected: [],
+    hola: ""
   };
 
   componentDidMount = async () => {
@@ -36,26 +38,51 @@ export default class GalleryScreen extends React.Component {
     this.setState({ selected });
   };
 
+  //Function_to_Target:
+
   saveToGallery = async () => {
     const photos = this.state.selected;
 
-    if (photos.length > 0) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    //console.log(photos);
 
-      if (status !== "granted") {
-        throw new Error("Denied CAMERA_ROLL permissions!");
-      }
+    var words = photos;
+    var named = words[0].split('/').pop()
+    var name_1 = named.split('.')
+    var name_x = name_1[0];
+    console.log(name_x);
+    var name_y = name_1[1];
+    console.log(name_y);
+    var endd = ("image" + "/" + name_y).toString();
+    console.log(endd);
 
-      const promises = photos.map(photoUri => {
-        return MediaLibrary.createAssetAsync(photoUri);
+
+    //console.log(words[0]);
+
+    this.setState({ hola: words[0] });
+
+    var namez = "Final_try";
+
+    var formData = new FormData();
+
+    formData.append("name", namez);
+    // formData.append("image", words[0]);
+    formData.append("image", {
+      uri: words[0],
+      name: named,
+      type: endd
+    });
+
+    console.log("--------");
+    //console.log(words[0].split('/').pop());
+    console.log("-------");
+
+    axios
+      .post("http://192.168.43.19:3000/api/photocreate", formData)
+      .then(function(response) {
+        console.log(response.data);
       });
-
-      await Promise.all(promises);
-      alert("Successfully saved photos to user's gallery!");
-    } else {
-      alert("No photos to save!");
-    }
   };
+  //Function_to_Target_Ends_here
 
   renderPhoto = fileName => (
     <Photo

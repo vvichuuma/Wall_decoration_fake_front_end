@@ -128,7 +128,7 @@ export default class signup extends Component {
   }
 
   onRegisterPressed() {
-    console.log("Computer Code is powerful");
+    console.log("Mark Zuckerberg is an american Computer Porgrammmer");
     var params = {
       first_name: this.state.first,
       last_name: this.state.last,
@@ -146,7 +146,7 @@ export default class signup extends Component {
     //   });
 
     axios
-      .post("http://localhost:3000/api/users", params)
+      .post("http://192.168.43.19:3000/api/users", params)
       .then(response => {
         this.props.navigation.navigate("login");
       })

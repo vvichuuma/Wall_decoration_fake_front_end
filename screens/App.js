@@ -30,7 +30,7 @@ class myapp extends Component {
               title="SIGNUP"
               onPress={() => this.props.navigation.navigate("signup")}
             />
-              <Button
+            <Button
               style={styles.signup}
               title="CAMERA"
               onPress={() => this.props.navigation.navigate("camera")}
@@ -75,4 +75,3 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent("myapp", () => myapp);
-
